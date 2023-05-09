@@ -1,3 +1,5 @@
-add_executable(RRT main.cpp)
+add_subdirectory(RRT)
 
-target_link_libraries(RRT sfml-window sfml-graphics sfml-system)
+add_executable(rrt_exec main.cpp)
+
+target_link_libraries(rrt_exec sfml-window sfml-graphics sfml-system rrt)
