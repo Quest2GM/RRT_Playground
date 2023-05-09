@@ -24,8 +24,6 @@ int main(int argc, char *argv[])
     //     cout << "Running else..." << endl;
     // }
 
-    RRT x(10, 10);
-
     while (window.isOpen())
     {
         sf::Event event;
