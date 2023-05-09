@@ -1,8 +1,2 @@
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Makefile
-cmake_install.cmake
-*build*
-*.vscode
+build/
+.vscode/
