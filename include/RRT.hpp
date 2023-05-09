@@ -7,9 +7,12 @@ using namespace std;
 
 class RRT
 {
-private:
-    vector<int> x;
-
 public:
+    RRT *parent;
+    vector<RRT> children;
+    int xPos, yPos;
+
+    RRT(int x, int y);
+    ~RRT();
     void display();
 };

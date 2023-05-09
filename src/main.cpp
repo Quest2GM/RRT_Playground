@@ -1,22 +1,30 @@
 
 #include <iostream>
+#include <string.h>
 #include <SFML/Graphics.hpp>
 #include <RRT.hpp>
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
-    cout << "RRT Playground" << endl;
-
-    RRT rrt;
-    rrt.display();
+    cout << "##################" << endl;
+    cout << "# RRT Playground #" << endl;
+    cout << "##################" << endl;
 
     sf::RenderWindow window(sf::VideoMode(1200, 800), "RRT");
     window.setFramerateLimit(60);
+    
+    // if (argc == 1 || string(argv[1]) == "RRT")
+    // {
+    //     cout << "Running RRT..." << endl;
+    // }
+    // else
+    // {
+    //     cout << "Running else..." << endl;
+    // }
 
-    sf::CircleShape shape(50);
-    shape.setFillColor(sf::Color(150, 50, 250));
+    RRT x(10, 10);
 
     while (window.isOpen())
     {
