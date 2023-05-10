@@ -1,9 +1,9 @@
 
 #include <string.h>
 #include <RRT.hpp>
-#include <cstdlib>
 
 using namespace std;
+
 
 int main(int argc, char *argv[])
 {
@@ -11,14 +11,13 @@ int main(int argc, char *argv[])
     cout << "# RRT Playground #" << endl;
     cout << "##################" << endl;
 
-    srand(1);
+    srand(0);
 
-    int windowX = 1200, windowY = 800;
-
-    sf::RenderWindow window(sf::VideoMode(windowX, windowY), "RRT");
-    window.setFramerateLimit(60);
+    sf::RenderWindow window(sf::VideoMode(1200, 800), "RRT");
+    window.setFramerateLimit(100);
     
-    RRT rrt;
+    RRT rrt(10,10,1150,750);
+    rrt.dispStartEnd(window);
 
     while (window.isOpen())
     {
@@ -33,8 +32,7 @@ int main(int argc, char *argv[])
         }
 
 		// window.clear();
-        int rX = rand() % windowX, rY = rand() % windowY;
-        rrt.addNode(rX, rY, window);
+        
 
         window.display();
     }

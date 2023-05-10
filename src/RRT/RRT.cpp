@@ -9,8 +9,12 @@ RRTNode::RRTNode(int x, int y)
 
 RRTNode::~RRTNode() {};
 
-RRT::RRT()
+RRT::RRT(int startX, int startY, int endX, int endY)
 {
+    this->startX = startX;
+    this->startY = startY;
+    this->endX = endX;
+    this->endY = endY;
     root = NULL;
 }
 
@@ -85,4 +89,23 @@ RRTNode* RRT::findClosest(RRTNode* node, int x, int y)
 float RRT::findDistance(int x1, int x2, int y1, int y2)
 {
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+}
+
+void RRT::runIteration(int endX, int endY, sf::RenderWindow &window)
+{
+    int rX = rand() % 1200, rY = rand() % 800;
+    addNode(rX, rY, window);
+}
+
+void RRT::dispStartEnd(sf::RenderWindow &window)
+{
+    addNode(startX, startY, window);
+    sf::CircleShape startCircle(5);
+    startCircle.setPosition(sf::Vector2f(startX, startY));
+    startCircle.setFillColor(sf::Color(0, 255, 0));
+    sf::CircleShape endCircle(5);
+    endCircle.setPosition(sf::Vector2f(endX, endY));
+    endCircle.setFillColor(sf::Color(255, 0, 0));
+    window.draw(startCircle);
+    window.draw(endCircle);
 }
