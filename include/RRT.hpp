@@ -32,10 +32,11 @@ public:
 
     RRT(int startX, int startY, int endX, int endY);
     ~RRT();
-    void addNode(int x, int y, sf::RenderWindow& window);
+    RRTNode* addNode(int x, int y, sf::RenderWindow& window);
     RRTNode* findClosest(RRTNode* node, int x, int y);
     float findDistance(int x1, int x2, int y1, int y2);
-    void drawBranch(int x1, int y1, int x2, int y2, sf::RenderWindow& window);
+    void drawBranch(int x1, int y1, int x2, int y2, sf::RenderWindow& window, sf::Color colour);
     void dispStartEnd(sf::RenderWindow &window);
-    void runIteration(int endX, int endY, sf::RenderWindow& window);
+    bool runIteration(sf::RenderWindow& window);
+    void traceBack(RRTNode* node, sf::RenderWindow& window);
 };

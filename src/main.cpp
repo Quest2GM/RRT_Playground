@@ -11,13 +11,15 @@ int main(int argc, char *argv[])
     cout << "# RRT Playground #" << endl;
     cout << "##################" << endl;
 
-    srand(0);
+    srand(100);
 
     sf::RenderWindow window(sf::VideoMode(1200, 800), "RRT");
     window.setFramerateLimit(100);
     
     RRT rrt(10,10,1150,750);
     rrt.dispStartEnd(window);
+
+    bool found = false;
 
     while (window.isOpen())
     {
@@ -31,8 +33,10 @@ int main(int argc, char *argv[])
             }
         }
 
-		// window.clear();
-        
+        if (!found)
+        {
+            found = rrt.runIteration(window);    
+        }
 
         window.display();
     }
