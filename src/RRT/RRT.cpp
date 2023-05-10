@@ -40,7 +40,7 @@ RRTNode* RRT::addNode(int x, int y, sf::RenderWindow& window)
     child->nodeId = id++;
     child->distToCome = parent->distToCome + findDistance(x, parent->xPos, y, parent->yPos);
     parent->children.push_back(child);
-    drawBranch(parent->xPos, parent->yPos, x, y, window, sf::Color::White);
+    drawBranch(parent->xPos, parent->yPos, x, y, window, sf::Color::Magenta);
 
     return child;
 }
@@ -53,6 +53,20 @@ void RRT::drawBranch(int x1, int y1, int x2, int y2, sf::RenderWindow& window, s
         sf::Vertex(sf::Vector2f(x2, y2), colour)
     };
     window.draw(branch, 2, sf::Lines);
+}
+
+void RRT::drawObstacles(sf::RenderWindow &window)
+{
+    sf::RectangleShape rectangle(sf::Vector2f(300, 700));
+    rectangle.setFillColor(sf::Color(40,40,40));
+    rectangle.setPosition(sf::Vector2f(150, 0));
+    obsLocs.push_back({150, 0});
+    window.draw(rectangle);
+    sf::RectangleShape rectangle2(sf::Vector2f(300, 700));
+    rectangle2.setFillColor(sf::Color(40,40,40));
+    rectangle2.setPosition(sf::Vector2f(700, 100));
+    obsLocs.push_back({700, 100});
+    window.draw(rectangle2);
 }
 
 RRTNode* RRT::findClosest(RRTNode* node, int x, int y)
@@ -97,6 +111,7 @@ bool RRT::runIteration(sf::RenderWindow &window)
 {
     int rX = rand() % 1200, rY = rand() % 800;
     addNode(rX, rY, window);
+    dispStartEnd(window);
 
     if (findDistance(rX, endX, rY, endY) < 5)
     {

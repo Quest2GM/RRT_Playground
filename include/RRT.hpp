@@ -29,6 +29,7 @@ public:
     RRTNode* root = NULL;
     int id = 0;
     int startX, startY, endX, endY;
+    vector<vector<int>> obsLocs;
 
     RRT(int startX, int startY, int endX, int endY);
     ~RRT();
@@ -36,7 +37,8 @@ public:
     RRTNode* findClosest(RRTNode* node, int x, int y);
     float findDistance(int x1, int x2, int y1, int y2);
     void drawBranch(int x1, int y1, int x2, int y2, sf::RenderWindow& window, sf::Color colour);
+    void drawObstacles(sf::RenderWindow &window);
     void dispStartEnd(sf::RenderWindow &window);
-    bool runIteration(sf::RenderWindow& window);
+    bool runIteration(sf::RenderWindow &window);
     void traceBack(RRTNode* node, sf::RenderWindow& window);
 };

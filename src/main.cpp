@@ -15,9 +15,11 @@ int main(int argc, char *argv[])
 
     sf::RenderWindow window(sf::VideoMode(1200, 800), "RRT");
     window.setFramerateLimit(100);
+    window.clear(sf::Color::White);
     
-    RRT rrt(10,10,1150,750);
+    RRT rrt(100,100,1100,700);
     rrt.dispStartEnd(window);
+    rrt.drawObstacles(window);
 
     bool found = false;
 
