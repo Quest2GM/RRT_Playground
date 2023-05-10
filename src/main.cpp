@@ -1,8 +1,7 @@
 
-#include <iostream>
 #include <string.h>
-#include <SFML/Graphics.hpp>
 #include <RRT.hpp>
+#include <cstdlib>
 
 using namespace std;
 
@@ -12,17 +11,14 @@ int main(int argc, char *argv[])
     cout << "# RRT Playground #" << endl;
     cout << "##################" << endl;
 
-    sf::RenderWindow window(sf::VideoMode(1200, 800), "RRT");
+    srand(1);
+
+    int windowX = 1200, windowY = 800;
+
+    sf::RenderWindow window(sf::VideoMode(windowX, windowY), "RRT");
     window.setFramerateLimit(60);
     
-    // if (argc == 1 || string(argv[1]) == "RRT")
-    // {
-    //     cout << "Running RRT..." << endl;
-    // }
-    // else
-    // {
-    //     cout << "Running else..." << endl;
-    // }
+    RRT rrt;
 
     while (window.isOpen())
     {
@@ -36,8 +32,10 @@ int main(int argc, char *argv[])
             }
         }
 
-		window.clear();
-        
+		// window.clear();
+        int rX = rand() % windowX, rY = rand() % windowY;
+        rrt.addNode(rX, rY, window);
+
         window.display();
     }
 }

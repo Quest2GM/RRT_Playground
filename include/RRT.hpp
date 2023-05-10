@@ -12,8 +12,9 @@ class RRTNode
 {
 public:
     int xPos, yPos;
+    int nodeId;
     float distToCome;
-    RRTNode *parent;
+    RRTNode* parent;
     vector<RRTNode*> children;
 
     RRTNode(int x, int y);
@@ -24,12 +25,14 @@ public:
 class RRT
 {
 public:
-    RRTNode* root;
+    RRTNode* root = NULL;
+    int id = 0;
 
     RRT();
     ~RRT();
-    void addNode(int x, int y);
+    void addNode(int x, int y, sf::RenderWindow& window);
     RRTNode* findClosest(RRTNode* node, int x, int y);
     float findDistance(int x1, int x2, int y1, int y2);
+    void drawBranch(int x1, int y1, int x2, int y2, sf::RenderWindow& window);
 
 };
