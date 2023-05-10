@@ -1,10 +1,10 @@
 #include <RRT.hpp>
 
-RRTNode::RRTNode(int x, int y, float dist, RRTNode* parentNode)
+RRTNode::RRTNode(int x, int y)
 {
     xPos = x; yPos = y;
-    parent = parentNode;
-    distToCome = dist;
+    parent = NULL;
+    distToCome = 0;
 }
 
 RRTNode::~RRTNode() {};
@@ -19,27 +19,32 @@ RRT::~RRT()
     cout << "RRT Destructed" << endl;
 }
 
-void RRT::addNode(int x, int y, RRTNode* parent)
+void RRT::addNode(int x, int y)
 {   
-    float distance = parent->distToCome + sqrt(pow(parent->xPos - x, 2) + pow(parent->yPos - y, 2));
-    RRTNode* rrtNode = new RRTNode(x, y, distance, parent);
-
-    if (root == NULL)
+    RRTNode* parent = findClosest(root, x, y);
+    RRTNode* child = new RRTNode(x, y);
+    
+    if (parent == NULL)
     {
-        root = rrtNode;
+        root = child;
+        return;
     }
-    else 
-    {
-        parent->children.push_back(rrtNode);
-    }
+    
+    child->distToCome = parent->distToCome + findDistance(x, parent->xPos, y, parent->yPos);
+    parent->children.push_back(child);
 }
 
-void RRT::findClosest(RRTNode* node)
+RRTNode* RRT::findClosest(RRTNode* node, int x, int y)
 {
-    static RRTNode* minNode = root;
-    static float minDist = 1000000;
+    static RRTNode* minNode = node;
+    static float minDist = findDistance(x, minNode->xPos, y, minNode->yPos);
 
-    float currDist = sqrt(pow(node->xPos - minNode->xPos, 2) + pow(node->yPos - minNode->yPos, 2));
+    if (node == NULL)
+    {
+        return minNode;
+    }
+
+    float currDist = findDistance(x, minNode->xPos, y, minNode->yPos);
     if (currDist < minDist)
     {
         minDist = currDist;
@@ -50,7 +55,13 @@ void RRT::findClosest(RRTNode* node)
     {
         for (int i = 0; i < node->children.size(); i++)
         {
-            findClosest(node->children[i]);
+            RRTNode* n = findClosest(node->children[i], x, y);
         }
     }
+    return minNode;
+}
+
+float RRT::findDistance(int x1, int x2, int y1, int y2)
+{
+    return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }

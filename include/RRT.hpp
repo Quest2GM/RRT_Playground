@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ public:
     RRTNode *parent;
     vector<RRTNode*> children;
 
-    RRTNode(int x, int y, float dist, RRTNode* parentNode);
+    RRTNode(int x, int y);
     ~RRTNode();
 };
 
@@ -25,7 +26,10 @@ class RRT
 public:
     RRTNode* root;
 
-    void addNode(int x, int y, RRTNode* parent);
-    void findClosest(RRTNode* node);
+    RRT();
+    ~RRT();
+    void addNode(int x, int y);
+    RRTNode* findClosest(RRTNode* node, int x, int y);
+    float findDistance(int x1, int x2, int y1, int y2);
 
 };
