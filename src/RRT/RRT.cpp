@@ -110,6 +110,19 @@ bool RRT::isCollision(RRTNode* p, RRTNode* c)
     return false;
 }
 
+void RRT::buildEnvironment(sf::RenderWindow &window)
+{
+    // Display start and end points
+    start.draw(5, window, sf::Color::Green);
+    end.draw(5, window, sf::Color::Red);
+
+    // Create obstacles
+    for (int i = 0; i < obstacles.size(); i++)
+    {
+        obstacles[i].draw(window);
+    }
+}
+
 
 bool RRT::runIteration(sf::RenderWindow &window)
 {
