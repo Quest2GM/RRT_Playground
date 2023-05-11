@@ -36,14 +36,20 @@ RRTNode* RRT::addNode(int x, int y, sf::RenderWindow& window)
 
     RRTNode* parent = findClosest(root, x, y);
 
+    float pcDist = findDistance(x, parent->xPos, y, parent->yPos);
+
     if (isCollision(parent, child))
+    {
+        return NULL;
+    }
+    if (pcDist > 100)
     {
         return NULL;
     }
     
     child->parent = parent;
     child->nodeId = id++;
-    child->distToCome = parent->distToCome + findDistance(x, parent->xPos, y, parent->yPos);
+    child->distToCome = parent->distToCome + pcDist;
     parent->children.push_back(child);
     drawBranch(parent->xPos, parent->yPos, x, y, window, sf::Color::Magenta);
 
@@ -115,10 +121,15 @@ float RRT::findDistance(int x1, int x2, int y1, int y2)
 bool RRT::runIteration(sf::RenderWindow &window)
 {
     int rX = rand() % 1200, rY = rand() % 800;
-    addNode(rX, rY, window);
+    RRTNode* newNode = addNode(rX, rY, window);
     dispStartEnd(window);
 
-    if (findDistance(rX, endX, rY, endY) < 5)
+    if (newNode == NULL)
+    {
+        return false;
+    }
+
+    if (findDistance(rX, endX, rY, endY) < 10)
     {
         RRTNode* finalNode = addNode(endX, endY, window);
         traceBack(finalNode, window);
@@ -208,6 +219,6 @@ bool RRT::checkIntersection(int x1, int x2, int y1, int y2, int a1, int a2, int 
     float t = crossQmPS / crossRS;
     float u = crossQmPR / crossRS;
 
-    return (0 <= t && t <= 1 && 0 <= u && u <= 1);
+    return (t >= 0 && t <= 1 && u >= 0 && u <= 1);
 }
 
