@@ -6,5 +6,8 @@
 
 class RRTStar : public RRT
 {
-    
+    int searchRadius = 50;
+
+    vector<RRTNode*> findNodesWithinRadius(RRTNode* node, Point p);
+    bool runIteration(sf::RenderWindow &window) override;
 };

@@ -20,5 +20,5 @@ public:
     RRTNode* findClosest(RRTNode* node, Point p);
     void traceBack(RRTNode* node, sf::RenderWindow& window);
     bool isCollision(RRTNode* parent, RRTNode* child);
-    bool runIteration(sf::RenderWindow &window);
+    virtual bool runIteration(sf::RenderWindow &window);
 };
