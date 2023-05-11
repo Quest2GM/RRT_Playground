@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     cout << "# RRT Playground #" << endl;
     cout << "##################" << endl;
 
-    srand(100);
+    srand(0);
 
     sf::RenderWindow window(sf::VideoMode(1200, 800), "RRT");
     window.setFramerateLimit(100);

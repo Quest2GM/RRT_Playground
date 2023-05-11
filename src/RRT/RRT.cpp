@@ -35,6 +35,11 @@ RRTNode* RRT::addNode(int x, int y, sf::RenderWindow& window)
     }
 
     RRTNode* parent = findClosest(root, x, y);
+
+    if (isCollision(parent, child))
+    {
+        return NULL;
+    }
     
     child->parent = parent;
     child->nodeId = id++;
@@ -60,12 +65,12 @@ void RRT::drawObstacles(sf::RenderWindow &window)
     sf::RectangleShape rectangle(sf::Vector2f(300, 700));
     rectangle.setFillColor(sf::Color(40,40,40));
     rectangle.setPosition(sf::Vector2f(150, 0));
-    obsLocs.push_back({150, 0});
+    obsLocs.push_back({150, 0, 300, 700});
     window.draw(rectangle);
     sf::RectangleShape rectangle2(sf::Vector2f(300, 700));
     rectangle2.setFillColor(sf::Color(40,40,40));
     rectangle2.setPosition(sf::Vector2f(700, 100));
-    obsLocs.push_back({700, 100});
+    obsLocs.push_back({700, 100, 300, 700});
     window.draw(rectangle2);
 }
 
@@ -145,3 +150,64 @@ void RRT::traceBack(RRTNode* finalNode, sf::RenderWindow& window)
         currNode = par;
     }
 }
+
+bool RRT::isCollision(RRTNode* p, RRTNode* c)
+{
+    for (int i = 0; i < obsLocs.size(); i++)
+    {
+        int rectX = obsLocs[i][0];
+        int rectY = obsLocs[i][1];
+        int rectW = obsLocs[i][2];
+        int rectH = obsLocs[i][3];
+
+        bool I1 = checkIntersection(rectX, rectX + rectW, rectY, rectY,
+                                    p->xPos, c->xPos, p->yPos, c->yPos);
+        bool I2 = checkIntersection(rectX, rectX, rectY, rectY + rectH,
+                                    p->xPos, c->xPos, p->yPos, c->yPos);
+        bool I3 = checkIntersection(rectX + rectW, rectX + rectW, rectY, rectY + rectH,
+                                    p->xPos, c->xPos, p->yPos, c->yPos);
+        bool I4 = checkIntersection(rectX, rectX + rectW, rectY + rectH, rectY + rectH,
+                                    p->xPos, c->xPos, p->yPos, c->yPos);
+
+        if (I1 || I2 || I3 || I4)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool RRT::checkIntersection(int x1, int x2, int y1, int y2, int a1, int a2, int b1, int b2)
+{
+    Eigen::Vector3d P(x1, y1, 0);
+    Eigen::Vector3d R(x2 - x1, y2 - y1, 0);
+    Eigen::Vector3d Q(a1, b1, 0);
+    Eigen::Vector3d S(a2 - a1, b2 - b1, 0);
+
+    float crossRS = R.cross(S).coeff(2);
+    float crossQmPR = (Q - P).cross(R).coeff(2);
+    float crossQmPS = (Q - P).cross(S).coeff(2);
+    float dotQmPR = (Q - P).dot(R);
+    float dotRR = R.dot(R);
+    float dotQpSmPR = (Q + S - P).dot(R);
+    
+    if (crossRS == 0 && crossQmPR == 0)
+    {
+        if ((dotQmPR >= 0 && dotRR >= dotQmPR) || (dotQpSmPR >= 0 && dotRR >= dotQpSmPR))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    if (crossRS == 0 && crossQmPR != 0)
+    {
+        return false;
+    }
+    
+    float t = crossQmPS / crossRS;
+    float u = crossQmPR / crossRS;
+
+    return (0 <= t && t <= 1 && 0 <= u && u <= 1);
+}
+

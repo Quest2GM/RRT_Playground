@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
+#include <eigen3/Eigen/Dense>
 
 using namespace std;
 
@@ -41,4 +42,6 @@ public:
     void dispStartEnd(sf::RenderWindow &window);
     bool runIteration(sf::RenderWindow &window);
     void traceBack(RRTNode* node, sf::RenderWindow& window);
+    bool isCollision(RRTNode* parent, RRTNode* child);
+    bool checkIntersection(int x1, int x2, int y1, int y2, int a1, int a2, int b1, int b2);
 };
