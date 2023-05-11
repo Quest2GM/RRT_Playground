@@ -4,6 +4,7 @@
 #include <eigen3/Eigen/Dense>
 #include <SFML/Graphics.hpp>
 
+using namespace std;
 
 class RRTNode
 {
@@ -12,7 +13,8 @@ public:
     int nodeId = 0;
     float distToCome = 0;
     RRTNode* parent = NULL;
-    std::vector<RRTNode*> children;
+    vector<RRTNode*> children;
+    vector<bool> connected;
 
     RRTNode(int x, int y)
     {
