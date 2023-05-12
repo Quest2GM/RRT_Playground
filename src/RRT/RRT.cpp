@@ -87,7 +87,6 @@ RRTNode* RRT::findClosest(RRTNode* node, Point p)
 void RRT::traceBack(RRTNode* finalNode, sf::RenderWindow& window)
 {
     RRTNode* currNode = finalNode;
-    cout << "Distance to Come: " << finalNode->distToCome << endl;
     while (currNode->parent != NULL)
     {
         RRTNode* par = currNode->parent;
@@ -127,19 +126,22 @@ void RRT::buildEnvironment(sf::RenderWindow &window)
 bool RRT::runIteration(sf::RenderWindow &window)
 {
     Point newPoint(rand() % 1200, rand() % 800);
-
     RRTNode* newNode = addNode(newPoint, window);
 
     if (newNode == NULL)
     {
         return false;
     }
+    iterations++;
 
     Line newLine(newPoint, end);
     if (newLine.getLength() < goalRadius)
     {
         RRTNode* finalNode = addNode(end, window);
+        lastNode = finalNode;
         traceBack(finalNode, window);
+        cout << "Number of Iterations: " << iterations << endl;
+        cout << "Distance to Come: " << lastNode->distToCome << endl;
         return true;
     }
     return false;

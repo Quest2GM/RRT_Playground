@@ -112,6 +112,12 @@ bool RRTStar::runIteration(sf::RenderWindow &window)
         return false;
     }
 
+    iterations++;
+    if (iterations % 100 == 0)
+    {
+        cout << iterations << endl;
+    }
+
     vector<RRTNode*> closeNodes = findNodesWithinRadius(root, newNode);
     rewireEdges(newNode, closeNodes);
    
@@ -124,7 +130,6 @@ bool RRTStar::runIteration(sf::RenderWindow &window)
     if (reachedDest == true)
     {
         traceBack(lastNode, window);
-        return false;
     }
     else
     {
@@ -139,5 +144,20 @@ bool RRTStar::runIteration(sf::RenderWindow &window)
         }
     }
 
+    // Exit if maxIterations reached
+    if (iterations >= maxIterations)
+    {
+        cout << "Max Iterations Reached!" << endl;
+        if (lastNode == NULL)
+        {
+            cout << "Could not find goal!" << endl;
+        }
+        else
+        {
+            cout << "Distance to Come: " << lastNode->distToCome << endl;
+        }
+        return true;
+    }
+    
     return false;
 }

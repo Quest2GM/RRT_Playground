@@ -14,6 +14,8 @@ public:
     std::vector<Rectangle> obstacles;
     int expandDist = 75;
     int goalRadius = 50;
+    int iterations = 0;
+    RRTNode* lastNode = NULL;
 
     RRT(Point start, Point end, std::vector<Rectangle> obstacles);
     RRTNode* addNode(Point p, sf::RenderWindow& window);
