@@ -104,7 +104,7 @@ void RRTStar::reDrawTree(RRTNode* node, sf::RenderWindow &window)
 
 bool RRTStar::runIteration(sf::RenderWindow &window)
 {
-    Point newPoint(rand() % 1200, rand() % 800);
+    Point newPoint = samplePoint();
     RRTNode* newNode = addNode(newPoint, window);
 
     if (newNode == NULL)

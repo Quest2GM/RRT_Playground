@@ -23,7 +23,7 @@ int main()
     vector<Rectangle> obstacles = {r1, r2};
 
     // RRT Initialization and Loop
-    RRT rrt(start, end, obstacles);
+    RRTStar rrt(start, end, obstacles);
     rrt.buildEnvironment(window);
     rrt.addNode(start, window);
 

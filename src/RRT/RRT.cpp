@@ -109,6 +109,12 @@ bool RRT::isCollision(RRTNode* p, RRTNode* c)
     return false;
 }
 
+Point RRT::samplePoint()
+{
+    Point newPoint(rand() % 1200, rand() % 800);
+    return newPoint;
+}
+
 void RRT::buildEnvironment(sf::RenderWindow &window)
 {
     // Display start and end points
@@ -125,7 +131,7 @@ void RRT::buildEnvironment(sf::RenderWindow &window)
 
 bool RRT::runIteration(sf::RenderWindow &window)
 {
-    Point newPoint(rand() % 1200, rand() % 800);
+    Point newPoint = samplePoint();
     RRTNode* newNode = addNode(newPoint, window);
 
     if (newNode == NULL)
