@@ -34,20 +34,6 @@ vector<RRTNode*> RRTStar::findNodesWithinRadius(RRTNode* node, RRTNode* queryNod
     return nodesInRadius;
 }
 
-void RRTStar::changeParent(RRTNode* node, RRTNode* newParent, float minDist)
-{
-    RRTNode* nodeParent = node->parent;
-
-    // Remove child from old parent
-    vector<RRTNode*>::iterator itr = find(nodeParent->children.begin(), nodeParent->children.end(), node);
-    nodeParent->children.erase(nodeParent->children.begin() + distance(nodeParent->children.begin(), itr));
-
-    // Add new parent
-    node->parent = newParent;
-    newParent->children.push_back(node);
-    node->distToCome = minDist;
-}
-
 void RRTStar::rewireEdges(RRTNode* node, vector<RRTNode*> closeNodes)
 {
 
@@ -87,6 +73,20 @@ void RRTStar::rewireEdges(RRTNode* node, vector<RRTNode*> closeNodes)
             }
         }
     }
+}
+
+void RRTStar::changeParent(RRTNode* node, RRTNode* newParent, float minDist)
+{
+    RRTNode* nodeParent = node->parent;
+
+    // Remove child from old parent
+    vector<RRTNode*>::iterator itr = find(nodeParent->children.begin(), nodeParent->children.end(), node);
+    nodeParent->children.erase(nodeParent->children.begin() + distance(nodeParent->children.begin(), itr));
+
+    // Add new parent
+    node->parent = newParent;
+    newParent->children.push_back(node);
+    node->distToCome = minDist;
 }
 
 void RRTStar::reDrawTree(RRTNode* node, sf::RenderWindow &window)

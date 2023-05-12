@@ -14,9 +14,9 @@ public:
     int maxIterations = 3000;
 
     RRTStar(Point start, Point end, std::vector<Rectangle> obstacles) : RRT(start, end, obstacles) {};
-    void reDrawTree(RRTNode* node, sf::RenderWindow &window);
     vector<RRTNode*> findNodesWithinRadius(RRTNode* node, RRTNode* queryNode);
-    void changeParent(RRTNode* node, RRTNode* newParent, float minDist);
     void rewireEdges(RRTNode* node, vector<RRTNode*> closeNodes);
+    void changeParent(RRTNode* node, RRTNode* newParent, float minDist);
+    void reDrawTree(RRTNode* node, sf::RenderWindow &window);
     bool runIteration(sf::RenderWindow &window) override;
 };

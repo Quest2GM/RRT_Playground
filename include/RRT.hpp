@@ -7,15 +7,14 @@
 class RRT
 {
 public:
-    RRTNode* root = NULL;
-    int id = 0;
-    Point start;
-    Point end;
+    Point start, end;
     std::vector<Rectangle> obstacles;
+    RRTNode* root = NULL;
+    RRTNode* lastNode = NULL;
+    int id = 0;
     int expandDist = 75;
     int goalRadius = 50;
     int iterations = 0;
-    RRTNode* lastNode = NULL;
 
     RRT(Point start, Point end, std::vector<Rectangle> obstacles);
     RRTNode* addNode(Point p, sf::RenderWindow& window);
