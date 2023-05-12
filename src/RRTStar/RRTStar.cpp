@@ -140,7 +140,6 @@ bool RRTStar::runIteration(sf::RenderWindow &window)
             RRTNode* finalNode = addNode(end, window);
             lastNode = finalNode;
             traceBack(finalNode, window);
-            return false;
         }
     }
 
