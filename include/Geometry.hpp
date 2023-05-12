@@ -82,6 +82,14 @@ public:
         return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
     }
 
+    Point getMidpoint()
+    {
+        float xMid = (a.x + b.x) / 2;
+        float yMid = (a.y + b.y) / 2;
+        Point midPoint(xMid, yMid);
+        return midPoint;
+    }
+
     void draw(sf::RenderWindow &window, sf::Color colour)
     {
         sf::Vertex branch[] =
