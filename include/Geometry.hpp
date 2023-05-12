@@ -9,23 +9,23 @@ using namespace std;
 class RRTNode
 {
 public:
+    RRTNode* parent = NULL;
+    vector<RRTNode*> children;
     int xPos, yPos;
     int nodeId = 0;
     float distToCome = 0;
-    RRTNode* parent = NULL;
-    vector<RRTNode*> children;
 
     RRTNode(int x, int y)
     {
-        xPos = x; yPos = y;
+        xPos = x;
+        yPos = y;
     }
 };
 
 class Point
 {
 public:
-    int x;
-    int y;
+    int x, y;
 
     Point() {}
     Point(RRTNode* node)
