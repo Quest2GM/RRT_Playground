@@ -14,7 +14,6 @@ public:
     float distToCome = 0;
     RRTNode* parent = NULL;
     vector<RRTNode*> children;
-    vector<bool> optEdge;
 
     RRTNode(int x, int y)
     {
@@ -91,6 +90,16 @@ public:
             sf::Vertex(sf::Vector2f(b.x, b.y), colour)
         };
         window.draw(branch, 2, sf::Lines);
+    }
+
+    void drawThick(sf::RenderWindow &window, sf::Color colour)
+    {
+        sf::RectangleShape rectangle(sf::Vector2f(getLength(), 5));
+        rectangle.setFillColor(colour);
+        rectangle.setPosition(sf::Vector2f(a.x, a.y));
+        float angle = atan2(b.y - a.y, b.x - a.x) * 180 / M_PI;
+        rectangle.setRotation(angle);
+        window.draw(rectangle);
     }
 
 };

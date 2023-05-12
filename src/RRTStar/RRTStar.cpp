@@ -38,15 +38,13 @@ void RRTStar::changeParent(RRTNode* node, RRTNode* newParent, float minDist)
 {
     RRTNode* nodeParent = node->parent;
 
+    // Remove child from old parent
     vector<RRTNode*>::iterator itr = find(nodeParent->children.begin(), nodeParent->children.end(), node);
-    int idx = distance(nodeParent->children.begin(), itr);
-    bool optValue = nodeParent->optEdge[idx];
-    nodeParent->optEdge.erase(nodeParent->optEdge.begin() + idx);
-    nodeParent->children.erase(nodeParent->children.begin() + idx);
+    nodeParent->children.erase(nodeParent->children.begin() + distance(nodeParent->children.begin(), itr));
 
+    // Add new parent
     node->parent = newParent;
     newParent->children.push_back(node);
-    newParent->optEdge.push_back(optValue);
     node->distToCome = minDist;
 }
 
@@ -58,7 +56,7 @@ void RRTStar::rewireEdges(RRTNode* node, vector<RRTNode*> closeNodes)
         return;
     }
 
-    // Switch parent of node to closestNode
+    // Determine best rewiring for current node
     float minDist = 1000000;
     RRTNode* closestNode;
     for (int i = 0; i < closeNodes.size(); i++)
@@ -76,7 +74,7 @@ void RRTStar::rewireEdges(RRTNode* node, vector<RRTNode*> closeNodes)
         changeParent(node, closestNode, minDist);
     }
 
-    // Improve other points in the radius
+    // Improve rewiring for other points in the radius
     for (int i = 0; i < closeNodes.size(); i++)
     {
         Line newEdge(node, closeNodes[i]);
@@ -98,31 +96,11 @@ void RRTStar::reDrawTree(RRTNode* node, sf::RenderWindow &window)
         for (int i = 0; i < node->children.size(); i++)
         {
             Line branch(node, node->children[i]);
-            if (node->optEdge[i] == true)
-            {
-                branch.draw(window, sf::Color::Red);
-            }
-            else
-            {
-                branch.draw(window, sf::Color::Magenta);
-            }
+            branch.draw(window, sf::Color::Magenta);
             reDrawTree(node->children[i], window);
         }
     }    
 }
-
-void RRTStar::clearOptEdges(RRTNode* node, sf::RenderWindow &window)
-{
-    if (node != NULL)
-    {
-        for (int i = 0; i < node->children.size(); i++)
-        {
-            node->optEdge[i] = false;
-            clearOptEdges(node->children[i], window);
-        }
-    }    
-}
-
 
 bool RRTStar::runIteration(sf::RenderWindow &window)
 {
@@ -141,12 +119,10 @@ bool RRTStar::runIteration(sf::RenderWindow &window)
     window.clear(sf::Color::White);
     reDrawTree(root, window);
     buildEnvironment(window);
-    window.display();
 
     // Draw path if found
     if (reachedDest == true)
     {
-        clearOptEdges(root, window);
         traceBack(lastNode, window);
         return false;
     }
