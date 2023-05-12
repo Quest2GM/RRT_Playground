@@ -111,8 +111,8 @@ bool RRT::isCollision(RRTNode* p, RRTNode* c)
 
 Point RRT::samplePoint()
 {
-    Point newPoint(rand() % 1200, rand() % 800);
-    return newPoint;
+    Point sample(rand() % 1200, rand() % 800);
+    return sample;
 }
 
 void RRT::buildEnvironment(sf::RenderWindow &window)

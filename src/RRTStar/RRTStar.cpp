@@ -3,7 +3,7 @@
 using namespace std;
 
 
-vector<RRTNode*> RRTStar::findNodesWithinRadius(RRTNode* node, RRTNode* queryNode)
+vector<RRTNode*> RRTStar::findNodesWithinRadius(RRTNode* node, RRTNode* queryNode, int radius)
 { 
     static vector<RRTNode*> nodesInRadius;
 
@@ -21,14 +21,14 @@ vector<RRTNode*> RRTStar::findNodesWithinRadius(RRTNode* node, RRTNode* queryNod
     // Add to vector if node is within search radius
     Line nodeLine(node, queryNode);
     float currDist = nodeLine.getLength();
-    if ((currDist < searchRadius) && (node != queryNode))
+    if ((currDist < radius) && (node != queryNode))
     {
         nodesInRadius.push_back(node);
     }
     
     for (int i = 0; i < node->children.size(); i++)
     {
-        findNodesWithinRadius(node->children[i], queryNode);
+        findNodesWithinRadius(node->children[i], queryNode, radius);
     }
 
     return nodesInRadius;
@@ -102,6 +102,16 @@ void RRTStar::reDrawTree(RRTNode* node, sf::RenderWindow &window)
     }    
 }
 
+bool RRTStar::inGoalRegion(RRTNode* node)
+{
+    Line l(node, end);
+    if (l.getLength() < goalRadius)
+    {
+        return true;
+    }
+    return false;
+}
+
 bool RRTStar::runIteration(sf::RenderWindow &window)
 {
     Point newPoint = samplePoint();
@@ -118,7 +128,7 @@ bool RRTStar::runIteration(sf::RenderWindow &window)
         cout << iterations << endl;
     }
 
-    vector<RRTNode*> closeNodes = findNodesWithinRadius(root, newNode);
+    vector<RRTNode*> closeNodes = findNodesWithinRadius(root, newNode, searchRadius);
     rewireEdges(newNode, closeNodes);
    
     // Rebuild tree
@@ -127,20 +137,18 @@ bool RRTStar::runIteration(sf::RenderWindow &window)
     buildEnvironment(window);
 
     // Draw path if found
-    if (reachedDest == true)
+    if (!reachedDest)
     {
-        traceBack(lastNode, window);
+        if (inGoalRegion(newNode))
+        {
+            reachedDest = true;
+            lastNode = addNode(end, window);
+            traceBack(lastNode, window);
+        }
     }
     else
     {
-        Line newLine(newPoint, end);
-        if (newLine.getLength() < goalRadius)
-        {
-            reachedDest = true;
-            RRTNode* finalNode = addNode(end, window);
-            lastNode = finalNode;
-            traceBack(finalNode, window);
-        }
+        traceBack(lastNode, window);
     }
 
     // Exit if maxIterations reached

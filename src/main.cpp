@@ -2,6 +2,7 @@
 #include <string.h>
 #include <RRT.hpp>
 #include <RRTStar.hpp>
+#include <InformedRRTStar.hpp>
 
 using namespace std;
 
@@ -17,13 +18,14 @@ int main()
     
     // Terminals and Obstacles
     Point start(100, 100);
-    Point end(1100, 700);
+    // Point end(1100, 700);
+    Point end(100, 400);
     Rectangle r1(150, 0, 300, 700);
     Rectangle r2(700, 100, 300, 700);
     vector<Rectangle> obstacles = {r1, r2};
 
     // RRT Initialization and Loop
-    RRTStar rrt(start, end, obstacles);
+    InformedRRTStar rrt(start, end, obstacles);
     rrt.buildEnvironment(window);
     rrt.addNode(start, window);
 
