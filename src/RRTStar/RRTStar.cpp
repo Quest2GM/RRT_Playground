@@ -37,10 +37,16 @@ vector<RRTNode*> RRTStar::findNodesWithinRadius(RRTNode* node, RRTNode* queryNod
 void RRTStar::changeParent(RRTNode* node, RRTNode* newParent, float minDist)
 {
     RRTNode* nodeParent = node->parent;
-    nodeParent->children.erase(remove(nodeParent->children.begin(),
-                                      nodeParent->children.end(), node), nodeParent->children.end());
+
+    vector<RRTNode*>::iterator itr = find(nodeParent->children.begin(), nodeParent->children.end(), node);
+    int idx = distance(nodeParent->children.begin(), itr);
+    bool optValue = nodeParent->optEdge[idx];
+    nodeParent->optEdge.erase(nodeParent->optEdge.begin() + idx);
+    nodeParent->children.erase(nodeParent->children.begin() + idx);
+
     node->parent = newParent;
     newParent->children.push_back(node);
+    newParent->optEdge.push_back(optValue);
     node->distToCome = minDist;
 }
 
@@ -92,11 +98,31 @@ void RRTStar::reDrawTree(RRTNode* node, sf::RenderWindow &window)
         for (int i = 0; i < node->children.size(); i++)
         {
             Line branch(node, node->children[i]);
-            branch.draw(window, sf::Color::Magenta);
+            if (node->optEdge[i] == true)
+            {
+                branch.draw(window, sf::Color::Red);
+            }
+            else
+            {
+                branch.draw(window, sf::Color::Magenta);
+            }
             reDrawTree(node->children[i], window);
         }
     }    
 }
+
+void RRTStar::clearOptEdges(RRTNode* node, sf::RenderWindow &window)
+{
+    if (node != NULL)
+    {
+        for (int i = 0; i < node->children.size(); i++)
+        {
+            node->optEdge[i] = false;
+            clearOptEdges(node->children[i], window);
+        }
+    }    
+}
+
 
 bool RRTStar::runIteration(sf::RenderWindow &window)
 {
@@ -110,7 +136,7 @@ bool RRTStar::runIteration(sf::RenderWindow &window)
 
     vector<RRTNode*> closeNodes = findNodesWithinRadius(root, newNode);
     rewireEdges(newNode, closeNodes);
-    
+   
     // Rebuild tree
     window.clear(sf::Color::White);
     reDrawTree(root, window);
@@ -118,12 +144,23 @@ bool RRTStar::runIteration(sf::RenderWindow &window)
     window.display();
 
     // Draw path if found
-    Line newLine(newPoint, end);
-    if (newLine.getLength() < goalRadius)
+    if (reachedDest == true)
     {
-        RRTNode* finalNode = addNode(end, window);
-        traceBack(finalNode, window);
-        return true;
+        clearOptEdges(root, window);
+        traceBack(lastNode, window);
+        return false;
+    }
+    else
+    {
+        Line newLine(newPoint, end);
+        if (newLine.getLength() < goalRadius)
+        {
+            reachedDest = true;
+            RRTNode* finalNode = addNode(end, window);
+            lastNode = finalNode;
+            traceBack(finalNode, window);
+            return false;
+        }
     }
 
     return false;

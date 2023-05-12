@@ -14,7 +14,7 @@ public:
     float distToCome = 0;
     RRTNode* parent = NULL;
     vector<RRTNode*> children;
-    vector<bool> connected;
+    vector<bool> optEdge;
 
     RRTNode(int x, int y)
     {

@@ -43,6 +43,7 @@ RRTNode* RRT::addNode(Point childPoint, sf::RenderWindow& window)
     child->nodeId = id++;
     child->distToCome = parent->distToCome + pcDist;
     parent->children.push_back(child);
+    parent->optEdge.push_back(false);
     parToChild.draw(window, sf::Color::Magenta);
 
     return child;
@@ -91,6 +92,11 @@ void RRT::traceBack(RRTNode* finalNode, sf::RenderWindow& window)
     while (currNode->parent != NULL)
     {
         RRTNode* par = currNode->parent;
+        
+        vector<RRTNode*>::iterator itr = find(par->children.begin(), par->children.end(), currNode);
+        int idx = distance(par->children.begin(), itr);
+        par->optEdge[idx] = true;
+
         Line newTraceLine(par, currNode);
         newTraceLine.draw(window, sf::Color::Red);
         currNode = par;
