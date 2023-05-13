@@ -12,14 +12,13 @@ int main()
     // Random seed
     srand(0);
 
-    sf::RenderWindow window(sf::VideoMode(1200, 800), "RRT");
+    sf::RenderWindow window(sf::VideoMode(1200, 800), "RRT Playground");
     window.setFramerateLimit(100);
     window.clear(sf::Color::White);
     
     // Terminals and Obstacles
     Point start(100, 100);
-    // Point end(1100, 700);
-    Point end(100, 400);
+    Point end(1100, 700);
     Rectangle r1(150, 0, 300, 700);
     Rectangle r2(700, 100, 300, 700);
     vector<Rectangle> obstacles = {r1, r2};

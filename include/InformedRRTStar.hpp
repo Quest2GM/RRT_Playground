@@ -2,6 +2,7 @@
 
 #include <RRTStar.hpp>
 #include <eigen3/Eigen/SVD>
+#include <random>
 
 using namespace std;
 
