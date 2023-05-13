@@ -39,8 +39,8 @@ Point InformedRRTStar::samplePoint(sf::RenderWindow &window)
     }
     else
     {
-        float cMin = startToGoal.getLength()/2;
-        float cMax = lastNode->distToCome/2;
+        float cMin = startToGoal.getLength();
+        float cMax = lastNode->distToCome;
         Point center = startToGoal.getMidpoint();
         Eigen::Matrix2f L;
         L << cMax / 2, 0,
@@ -90,8 +90,8 @@ bool InformedRRTStar::runIteration(sf::RenderWindow &window)
     else
     {
         // Draw ellipse
-        float cMax = lastNode->distToCome / 2;
-        float cMin = startToGoal.getLength() / 2;
+        float cMax = lastNode->distToCome;
+        float cMin = startToGoal.getLength();
         Ellipse e(start, end, cMax, sqrt(pow(cMax, 2) - pow(cMin, 2)));
         e.draw(window);
         traceBack(lastNode, window);
