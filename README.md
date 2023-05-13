@@ -1,5 +1,5 @@
 # RRT Playground
-Implementation of Rapidly Exploring Random Trees (RRT) path planner and its some of its popular variants (RRT*, Informed RRT*) in modern C++.
+Implementation of Rapidly Exploring Random Trees (RRT) path planner and its some of its popular variants (RRT*, Anytime RRT, Informed RRT*) in modern C++.
 
 ## Installation
 - [SFML](https://www.sfml-dev.org/)
