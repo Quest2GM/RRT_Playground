@@ -91,7 +91,7 @@ void RRT::traceBack(RRTNode* finalNode, sf::RenderWindow& window)
     {
         RRTNode* par = currNode->parent;
         Line newTraceLine(par, currNode);
-        newTraceLine.drawThick(window, sf::Color::Magenta);
+        newTraceLine.drawThick(window, sf::Color::Blue);
         currNode = par;
     }
 }
