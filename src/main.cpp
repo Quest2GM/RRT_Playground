@@ -21,18 +21,20 @@ int main()
     Point end(700, 400);
 
     Rectangle r1(550, 200, 100, 200);
-    Rectangle r2(550, 410, 100, 200);
-    vector<Rectangle> obstacles = {r1, r2};
+    Rectangle r2(550, 405, 100, 200);
+    Rectangle r3(330, 100, 200, 100);
+    Rectangle r4(330, 600, 200, 100);
+    Rectangle r5(670, 100, 200, 100);
+    Rectangle r6(670, 600, 200, 100);
+    vector<Rectangle> obstacles = {r1, r2, r3, r4, r5, r6};
 
     // RRT Initialization and Loop
-    InformedRRTStar rrt(start, end, obstacles);
-    rrt.buildEnvironment(window);
-    rrt.addNode(start, window);
-
-    sf::Font font;
-    font.loadFromFile("/home/sinarasi/Documents/RRT_Playground/src/Memogram.otf");
+    RRTStar planner(start, end, obstacles);
+    planner.buildEnvironment(window);
+    planner.addNode(start, window);
 
     bool found = false;
+    float dist = 10000;
     while (window.isOpen())
     {
         sf::Event event;
@@ -45,28 +47,19 @@ int main()
             }
         }
 
-        if (!found)
+        if (!found && dist > 202)
         {
-            found = rrt.runIteration(window);    
+            found = planner.runIteration(window);    
         }
-        if (found || rrt.reachedDest)
+        if (found || planner.reachedDest)
         {
-            sf::Text text2;
-            text2.setFont(font);
-            text2.setString("Distance to Come: " + to_string(int(rrt.lastNode->distToCome)));
-            text2.setPosition(950, 740);
-            text2.setCharacterSize(20);
-            text2.setFillColor(sf::Color::Black);
-            window.draw(text2);
+            dist = planner.lastNode->distToCome;
+            Text text1("Distance: " + to_string(int(planner.lastNode->distToCome)), 10, 40);
+            text1.draw(window);
         }
 
-        sf::Text text1;
-        text1.setFont(font);
-        text1.setString("Iterations: " + to_string(rrt.iterations));
-        text1.setPosition(950, 700);
-        text1.setCharacterSize(20);
-        text1.setFillColor(sf::Color::Black);
-        window.draw(text1);
+        Text text2("Iterations: " + to_string(planner.iterations), 10, 10);
+        text2.draw(window);
 
         window.display();
     }
