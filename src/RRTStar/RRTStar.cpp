@@ -112,7 +112,7 @@ bool RRTStar::runIteration(sf::RenderWindow &window)
     iterations++;
     if (iterations % 100 == 0)
     {
-        cout << iterations << endl;
+        cout << "Iteration: " << iterations << endl;
     }
 
     vector<RRTNode*> closeNodes = findNodesWithinRadius(root, newNode, searchRadius);
