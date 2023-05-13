@@ -241,6 +241,10 @@ public:
 
     void draw(sf::RenderWindow &window)
     {
+        sf::RectangleShape rectangle(sf::Vector2f(210, 30));
+        rectangle.setFillColor(sf::Color::White);
+        rectangle.setPosition(sf::Vector2f(x-10, y));
+        window.draw(rectangle);
         sf::Text printText;
         printText.setFont(font);
         printText.setString(text);
