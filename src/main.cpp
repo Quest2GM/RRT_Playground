@@ -2,6 +2,7 @@
 #include <string.h>
 #include <RRT.hpp>
 #include <RRTStar.hpp>
+#include <AnytimeRRT.hpp>
 #include <InformedRRTStar.hpp>
 
 using namespace std;
