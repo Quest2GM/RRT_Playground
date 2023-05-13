@@ -48,7 +48,6 @@ Point InformedRRTStar::samplePoint(sf::RenderWindow &window)
         Eigen::Vector2f xBall = sampleFromUnitCircle();
         Eigen::Vector2f out = C * L * xBall;
         Point sample(out.coeff(0) + center.x, out.coeff(1) + center.y);
-
         return sample;
     }
 }
