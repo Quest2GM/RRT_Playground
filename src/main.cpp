@@ -19,6 +19,7 @@ int main()
     // Terminals and Obstacles
     Point start(100, 100);
     Point end(1100, 700);
+    // Point end(100, 350);
     Rectangle r1(150, 0, 300, 700);
     Rectangle r2(700, 100, 300, 700);
     vector<Rectangle> obstacles = {r1, r2};

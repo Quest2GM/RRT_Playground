@@ -10,7 +10,6 @@ class InformedRRTStar : public RRTStar
 {
 public:
     Eigen::Matrix2f C;
-    vector<RRTNode*> xSoln;
 
     InformedRRTStar(Point start, Point end, vector<Rectangle> obstacles) : RRTStar(start, end, obstacles)
     {
@@ -18,6 +17,6 @@ public:
     }
     Eigen::Vector2f sampleFromUnitCircle();
     Eigen::Matrix2f rotationToWorldFrame();
-    Point samplePoint(float cMax);
+    Point samplePoint() override;
     bool runIteration(sf::RenderWindow &window) override;
 };

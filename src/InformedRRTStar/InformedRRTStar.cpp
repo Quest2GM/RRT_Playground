@@ -30,7 +30,7 @@ Eigen::Matrix2f InformedRRTStar::rotationToWorldFrame()
 }
 
 
-Point InformedRRTStar::samplePoint(float cMax)
+Point InformedRRTStar::samplePoint()
 {
     if (lastNode == NULL)
     {
@@ -41,6 +41,7 @@ Point InformedRRTStar::samplePoint(float cMax)
     {
         Line startToGoal(start, end);
         float cMin = startToGoal.getLength();
+        float cMax = lastNode->distToCome;
         Point center = startToGoal.getMidpoint();
         Eigen::Matrix2f L;
         L << cMax / 2, 0,
@@ -55,22 +56,7 @@ Point InformedRRTStar::samplePoint(float cMax)
 
 bool InformedRRTStar::runIteration(sf::RenderWindow &window)
 {
-    float cBest = 1000000;
-
-    if (lastNode != NULL)
-    {
-        vector<RRTNode*> closeNodesToGoal = findNodesWithinRadius(root, lastNode, goalRadius);
-        for (int i = 0; i < closeNodesToGoal.size(); i++)
-        {
-            Line l(closeNodesToGoal[i], lastNode);
-            if (closeNodesToGoal[i]->distToCome + l.getLength() < cBest)
-            {
-                cBest = closeNodesToGoal[i]->distToCome + l.getLength();
-            }
-        }
-    }
-
-    Point newPoint = samplePoint(cBest);
+    Point newPoint = samplePoint();
     RRTNode* newNode = addNode(newPoint, window);
 
     if (newNode == NULL)
@@ -93,23 +79,18 @@ bool InformedRRTStar::runIteration(sf::RenderWindow &window)
     buildEnvironment(window);
 
     // Draw path if found
-    if ((inGoalRegion(newNode)) && (xSoln.size() == 0))
-    {
-        xSoln.push_back(newNode);
-        reachedDest = true;
-        lastNode = addNode(end, window);
-        traceBack(lastNode, window);
-    }
-    else
+    if (!reachedDest)
     {
         if (inGoalRegion(newNode))
         {
-            xSoln.push_back(newNode);
-        }
-        if (reachedDest)
-        {
+            reachedDest = true;
+            lastNode = addNode(end, window);
             traceBack(lastNode, window);
         }
+    }
+    else
+    {
+        traceBack(lastNode, window);
     }
 
     // Exit if maxIterations reached
