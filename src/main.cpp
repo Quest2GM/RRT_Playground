@@ -21,13 +21,16 @@ int main()
     Point end(700, 400);
 
     Rectangle r1(550, 200, 100, 200);
-    Rectangle r2(550, 405, 100, 200);
+    Rectangle r2(550, 410, 100, 200);
     vector<Rectangle> obstacles = {r1, r2};
 
     // RRT Initialization and Loop
     InformedRRTStar rrt(start, end, obstacles);
     rrt.buildEnvironment(window);
     rrt.addNode(start, window);
+
+    sf::Font font;
+    font.loadFromFile("/home/sinarasi/Documents/RRT_Playground/src/Memogram.otf");
 
     bool found = false;
     while (window.isOpen())
@@ -46,6 +49,24 @@ int main()
         {
             found = rrt.runIteration(window);    
         }
+        if (found || rrt.reachedDest)
+        {
+            sf::Text text2;
+            text2.setFont(font);
+            text2.setString("Distance to Come: " + to_string(int(rrt.lastNode->distToCome)));
+            text2.setPosition(950, 740);
+            text2.setCharacterSize(20);
+            text2.setFillColor(sf::Color::Black);
+            window.draw(text2);
+        }
+
+        sf::Text text1;
+        text1.setFont(font);
+        text1.setString("Iterations: " + to_string(rrt.iterations));
+        text1.setPosition(950, 700);
+        text1.setCharacterSize(20);
+        text1.setFillColor(sf::Color::Black);
+        window.draw(text1);
 
         window.display();
     }

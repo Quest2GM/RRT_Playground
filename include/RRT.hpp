@@ -12,9 +12,10 @@ public:
     RRTNode* root = NULL;
     RRTNode* lastNode = NULL;
     int id = 0;
-    int expandDist = 150;
+    int expandDist = 100;
     int goalRadius = 50;
     int iterations = 0;
+    bool reachedDest = false;
 
     RRT(Point start, Point end, std::vector<Rectangle> obstacles);
     RRTNode* addNode(Point p, sf::RenderWindow& window);

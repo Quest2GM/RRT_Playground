@@ -10,8 +10,7 @@ class RRTStar : public RRT
 {
 public:
     int searchRadius = 50;
-    bool reachedDest = false;
-    int maxIterations = 3000;
+    int maxIterations = 10000;
 
     RRTStar(Point start, Point end, std::vector<Rectangle> obstacles) : RRT(start, end, obstacles) {};
     vector<RRTNode*> findNodesWithinRadius(RRTNode* node, RRTNode* queryNode, int radius);
