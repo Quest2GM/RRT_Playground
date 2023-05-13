@@ -30,7 +30,7 @@ Eigen::Matrix2f InformedRRTStar::rotationToWorldFrame()
 }
 
 
-Point InformedRRTStar::samplePoint(sf::RenderWindow &window)
+Point InformedRRTStar::samplePoint()
 {
     if (lastNode == NULL)
     {
@@ -54,7 +54,7 @@ Point InformedRRTStar::samplePoint(sf::RenderWindow &window)
 
 bool InformedRRTStar::runIteration(sf::RenderWindow &window)
 {
-    Point newPoint = samplePoint(window);
+    Point newPoint = samplePoint();
     RRTNode* newNode = addNode(newPoint, window);
 
     if (newNode == NULL)
