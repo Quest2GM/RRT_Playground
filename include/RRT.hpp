@@ -23,6 +23,7 @@ public:
     void traceBack(RRTNode* node, sf::RenderWindow& window);
     bool isCollision(RRTNode* parent, RRTNode* child);
     virtual Point samplePoint();
+    void reDrawTree(RRTNode* node, sf::RenderWindow &window);
     void buildEnvironment(sf::RenderWindow &window);
     virtual bool runIteration(sf::RenderWindow &window);
 };

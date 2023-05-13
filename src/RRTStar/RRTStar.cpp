@@ -89,19 +89,6 @@ void RRTStar::changeParent(RRTNode* node, RRTNode* newParent, float minDist)
     node->distToCome = minDist;
 }
 
-void RRTStar::reDrawTree(RRTNode* node, sf::RenderWindow &window)
-{
-    if (node != NULL)
-    {
-        for (int i = 0; i < node->children.size(); i++)
-        {
-            Line branch(node, node->children[i]);
-            branch.draw(window, sf::Color::Magenta);
-            reDrawTree(node->children[i], window);
-        }
-    }    
-}
-
 bool RRTStar::inGoalRegion(RRTNode* node)
 {
     Line l(node, end);

@@ -115,6 +115,19 @@ Point RRT::samplePoint()
     return sample;
 }
 
+void RRT::reDrawTree(RRTNode* node, sf::RenderWindow &window)
+{
+    if (node != NULL)
+    {
+        for (int i = 0; i < node->children.size(); i++)
+        {
+            Line branch(node, node->children[i]);
+            branch.draw(window, sf::Color::Magenta);
+            reDrawTree(node->children[i], window);
+        }
+    }    
+}
+
 void RRT::buildEnvironment(sf::RenderWindow &window)
 {
     // Display start and end points
@@ -139,6 +152,11 @@ bool RRT::runIteration(sf::RenderWindow &window)
         return false;
     }
     iterations++;
+
+    // Redraw tree for text display purposes (wouldn't do this in true RRT)
+    window.clear(sf::Color::White);
+    reDrawTree(root, window);
+    buildEnvironment(window);
 
     Line newLine(newPoint, end);
     if (newLine.getLength() < goalRadius)
