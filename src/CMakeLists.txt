@@ -1,6 +1,7 @@
 add_subdirectory(RRT)
 add_subdirectory(RRTStar)
 add_subdirectory(InformedRRTStar)
+add_subdirectory(AnytimeRRT)
 
 add_executable(rrt_exec main.cpp)
 
@@ -12,4 +13,5 @@ target_link_libraries(rrt_exec sfml-window
                                Eigen3::Eigen 
                                rrt
                                rrtstar
-                               infrrtstar)
+                               infrrtstar
+                               anytimerrt)
