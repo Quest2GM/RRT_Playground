@@ -2,13 +2,20 @@
 Implementation of Rapidly Exploring Random Trees (RRT) path planner and its some of its popular variants (RRT*, Informed RRT*) in modern C++.
 
 ## Installation
-SFML and Eigen.
+- [SFML](https://www.sfml-dev.org/)
+- [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page)
+- [CMake](https://cmake.org/): Version > 3.10
 ```
 $ sudo apt-get install libsfml-dev libeigen3-dev
 ```
 
-## Implementation Details
-- 
+## Results
+### RRT
+
+### RRT*
+
+### Informed RRT*
+
 
 ## References
 [[1]](http://msl.cs.uiuc.edu/~lavalle/papers/Lav98c.pdf) Steven M. LaValle, "Rapidly-exploring random trees: A new tool for path planning," Technical Report. Computer Science Department, Iowa State University (TR 98–11).
