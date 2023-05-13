@@ -30,7 +30,7 @@ int main()
     vector<Rectangle> obstacles = {r1, r2, r3, r4, r5, r6};
 
     // RRT Initialization and Loop
-    RRTStar planner(start, end, obstacles);
+    AnytimeRRT planner(start, end, obstacles);
     planner.buildEnvironment(window);
     planner.addNode(start, window);
 

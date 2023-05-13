@@ -11,11 +11,16 @@ $ sudo apt-get install libsfml-dev libeigen3-dev
 
 ## Results
 ### RRT
+![RRT](images/rrt_demo.gif)
 
 ### RRT*
+![RRT*](images/rrt_star_demo.gif)
+
+### Anytime RRT
+![AnytimeRRT](images/anytime_rrt_demo.gif)
 
 ### Informed RRT*
-
+![InformedRRT](images/informed_rrt_demo.gif)
 
 ## References
 [[1]](http://msl.cs.uiuc.edu/~lavalle/papers/Lav98c.pdf) Steven M. LaValle, "Rapidly-exploring random trees: A new tool for path planning," Technical Report. Computer Science Department, Iowa State University (TR 98–11).
