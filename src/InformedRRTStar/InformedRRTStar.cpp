@@ -30,7 +30,7 @@ Eigen::Matrix2f InformedRRTStar::rotationToWorldFrame()
 }
 
 
-Point InformedRRTStar::samplePoint()
+Point InformedRRTStar::samplePoint(sf::RenderWindow &window)
 {
     if (lastNode == NULL)
     {
@@ -39,9 +39,8 @@ Point InformedRRTStar::samplePoint()
     }
     else
     {
-        Line startToGoal(start, end);
-        float cMin = startToGoal.getLength();
-        float cMax = lastNode->distToCome;
+        float cMin = startToGoal.getLength()/2;
+        float cMax = lastNode->distToCome/2;
         Point center = startToGoal.getMidpoint();
         Eigen::Matrix2f L;
         L << cMax / 2, 0,
@@ -49,6 +48,69 @@ Point InformedRRTStar::samplePoint()
         Eigen::Vector2f xBall = sampleFromUnitCircle();
         Eigen::Vector2f out = C * L * xBall;
         Point sample(out.coeff(0) + center.x, out.coeff(1) + center.y);
+
         return sample;
     }
+}
+
+bool InformedRRTStar::runIteration(sf::RenderWindow &window)
+{
+    Point newPoint = samplePoint(window);
+    RRTNode* newNode = addNode(newPoint, window);
+
+    if (newNode == NULL)
+    {
+        return false;
+    }
+
+    iterations++;
+    if (iterations % 100 == 0)
+    {
+        cout << "Iteration: " << iterations << endl;
+    }
+
+    vector<RRTNode*> closeNodes = findNodesWithinRadius(root, newNode, searchRadius);
+    rewireEdges(newNode, closeNodes);
+   
+    // Rebuild tree
+    window.clear(sf::Color::White);
+    reDrawTree(root, window);
+    buildEnvironment(window);
+
+    // Draw path if found
+    if (!reachedDest)
+    {
+        if (inGoalRegion(newNode))
+        {
+            reachedDest = true;
+            lastNode = addNode(end, window);
+            traceBack(lastNode, window);
+        }
+    }
+    else
+    {
+        // Draw ellipse
+        float cMax = lastNode->distToCome / 2;
+        float cMin = startToGoal.getLength() / 2;
+        Ellipse e(start, end, cMax, sqrt(pow(cMax, 2) - pow(cMin, 2)));
+        e.draw(window);
+        traceBack(lastNode, window);
+    }
+
+    // Exit if maxIterations reached
+    if (iterations >= maxIterations)
+    {
+        cout << "Max Iterations Reached!" << endl;
+        if (lastNode == NULL)
+        {
+            cout << "Could not find goal!" << endl;
+        }
+        else
+        {
+            cout << "Distance to Come: " << lastNode->distToCome << endl;
+        }
+        return true;
+    }
+    
+    return false;
 }

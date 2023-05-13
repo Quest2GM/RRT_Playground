@@ -12,7 +12,7 @@ public:
     RRTNode* root = NULL;
     RRTNode* lastNode = NULL;
     int id = 0;
-    int expandDist = 75;
+    int expandDist = 150;
     int goalRadius = 50;
     int iterations = 0;
 

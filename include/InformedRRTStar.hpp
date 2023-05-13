@@ -10,12 +10,15 @@ class InformedRRTStar : public RRTStar
 {
 public:
     Eigen::Matrix2f C;
+    Line startToGoal;
 
     InformedRRTStar(Point start, Point end, vector<Rectangle> obstacles) : RRTStar(start, end, obstacles)
     {
         C = rotationToWorldFrame();
+        startToGoal = Line(start, end);
     }
     Eigen::Vector2f sampleFromUnitCircle();
     Eigen::Matrix2f rotationToWorldFrame();
-    Point samplePoint() override;
+    Point samplePoint(sf::RenderWindow &window);
+    bool runIteration(sf::RenderWindow &window) override;
 };

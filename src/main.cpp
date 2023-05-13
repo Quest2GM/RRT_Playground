@@ -19,9 +19,9 @@ int main()
     // Terminals and Obstacles
     Point start(500, 400);
     Point end(700, 400);
-    // Point end(100, 350);
+
     Rectangle r1(550, 200, 100, 200);
-    Rectangle r2(550, 403, 100, 200);
+    Rectangle r2(550, 405, 100, 200);
     vector<Rectangle> obstacles = {r1, r2};
 
     // RRT Initialization and Loop

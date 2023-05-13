@@ -55,6 +55,8 @@ public:
     Point a;
     Point b;
 
+    Line() {}
+
     Line(Point a, Point b)
     {
         this->a = a;
@@ -214,9 +216,10 @@ public:
         ellipse.setScale(1.0f, minorAxis / majorAxis);
         ellipse.setPosition(center - axis);
         ellipse.setRotation(angle);
-        ellipse.setOutlineThickness(2);
+        ellipse.setOutlineThickness(5);
         ellipse.setOutlineColor(sf::Color::Red);
         ellipse.setFillColor(sf::Color::Transparent);
+        window.draw(ellipse);
     }
 
 };
