@@ -185,3 +185,39 @@ public:
     }
 
 };
+
+
+class Ellipse
+{
+public:
+    Point focusA;
+    Point focusB;
+    float majorAxis;
+    float minorAxis;
+
+    Ellipse(Point focusA, Point focusB, float majorAxis, float minorAxis)
+    {
+        this->focusA = focusA;
+        this->focusB = focusB;
+        this->majorAxis = majorAxis;
+        this->minorAxis = minorAxis;
+    }
+
+    void draw(sf::RenderWindow &window)
+    {
+        sf::Vector2f focus1(focusA.x, focusA.y);
+        sf::Vector2f focus2(focusB.x, focusB.y);
+        sf::Vector2f axis(majorAxis/2, minorAxis/2);
+        sf::Vector2f center = (focus1 + focus2) / 2.0f;
+        float angle = atan2(focus2.y - focus1.y, focus2.x - focus1.x) * 180 / M_PI;
+        sf::CircleShape ellipse(majorAxis / 2, 50);
+        ellipse.setScale(1.0f, minorAxis / majorAxis);
+        ellipse.setPosition(center - axis);
+        ellipse.setRotation(angle);
+        ellipse.setOutlineThickness(2);
+        ellipse.setOutlineColor(sf::Color::Red);
+        ellipse.setFillColor(sf::Color::Transparent);
+    }
+
+};
+
