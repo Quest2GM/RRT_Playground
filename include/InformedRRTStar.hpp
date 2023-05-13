@@ -18,5 +18,4 @@ public:
     Eigen::Vector2f sampleFromUnitCircle();
     Eigen::Matrix2f rotationToWorldFrame();
     Point samplePoint() override;
-    bool runIteration(sf::RenderWindow &window) override;
 };

@@ -17,11 +17,11 @@ int main()
     window.clear(sf::Color::White);
     
     // Terminals and Obstacles
-    Point start(100, 100);
-    Point end(1100, 700);
+    Point start(500, 400);
+    Point end(700, 400);
     // Point end(100, 350);
-    Rectangle r1(150, 0, 300, 700);
-    Rectangle r2(700, 100, 300, 700);
+    Rectangle r1(550, 200, 100, 200);
+    Rectangle r2(550, 403, 100, 200);
     vector<Rectangle> obstacles = {r1, r2};
 
     // RRT Initialization and Loop
