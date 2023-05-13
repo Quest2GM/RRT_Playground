@@ -216,10 +216,38 @@ public:
         ellipse.setScale(1.0f, minorAxis / majorAxis);
         ellipse.setPosition(center - axis);
         ellipse.setRotation(angle);
-        ellipse.setOutlineThickness(5);
-        ellipse.setOutlineColor(sf::Color::Red);
+        ellipse.setOutlineThickness(3);
+        ellipse.setOutlineColor(sf::Color::Black);
         ellipse.setFillColor(sf::Color::Transparent);
         window.draw(ellipse);
+    }
+
+};
+
+class Text
+{
+public:
+    string text;
+    int x, y;
+    sf::Font font;
+
+    Text(string text, int posX, int posY)
+    {
+        this->text = text;
+        x = posX;
+        y = posY;
+        font.loadFromFile("/home/sinarasi/Documents/RRT_Playground/fonts/Memogram.otf");
+    }
+
+    void draw(sf::RenderWindow &window)
+    {
+        sf::Text printText;
+        printText.setFont(font);
+        printText.setString(text);
+        printText.setPosition(x, y);
+        printText.setCharacterSize(20);
+        printText.setFillColor(sf::Color::Black);
+        window.draw(printText);
     }
 
 };
