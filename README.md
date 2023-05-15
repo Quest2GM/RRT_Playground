@@ -18,7 +18,7 @@ At each iteration, a point is sampled within a given search radius, and then is 
 ![RRT*](images/rrt_star_demo_v2.gif)
 
 ### Anytime RRT
-The RRT algorithm is performed until a goal has been found. Once found, the RRT* algorithm is applied until a set number of iterations or a goal distance threshold has been reached. Anytime RRT is asymptotically optimal.
+The RRT algorithm is performed until a goal has been found. Once found, the RRT* algorithm is performed until a set number of iterations or a goal distance threshold has been reached. Anytime RRT is asymptotically optimal.
 ![AnytimeRRT](images/anytime_rrt_demo_v2.gif)
 
 ### Informed RRT*
