@@ -13,10 +13,10 @@ $ sudo apt-get install libsfml-dev libeigen3-dev
 ![RRT](images/rrt_demo.gif)
 
 ### RRT*
-![RRT*](images/rrt_star_demo.gif)
+![RRT*](images/rrt_star_demo_v2.gif)
 
 ### Anytime RRT
-![AnytimeRRT](images/anytime_rrt_demo.gif)
+![AnytimeRRT](images/anytime_rrt_demo_v2.gif)
 
 ### Informed RRT*
 ![InformedRRT](images/informed_rrt_demo.gif)
