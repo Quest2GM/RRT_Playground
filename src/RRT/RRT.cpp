@@ -13,7 +13,6 @@ RRT::RRT(Point start, Point end, vector<Rectangle> obstacles)
 RRT::~RRT()
 {
     deleteNodes(root);
-    cout << "Destructed RRT Tree!" << endl;
 }
 
 void RRT::deleteNodes(RRTNode* node)
