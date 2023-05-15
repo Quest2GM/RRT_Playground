@@ -8,10 +8,11 @@ using namespace std;
 
 class InformedRRTStar : public RRTStar
 {
-public:
+private:
     Eigen::Matrix2f C;
     Line startToGoal;
 
+public:
     InformedRRTStar(Point start, Point end, vector<Rectangle> obstacles) : RRTStar(start, end, obstacles)
     {
         C = rotationToWorldFrame();

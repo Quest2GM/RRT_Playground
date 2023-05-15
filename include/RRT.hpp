@@ -6,15 +6,17 @@
 
 class RRT
 {
-public:
-    Point start, end;
+private:
     std::vector<Rectangle> obstacles;
-    RRTNode* root = NULL;
-    RRTNode* lastNode = NULL;
     int id = 0;
     int expandDist = 100;
-    int goalRadius = 50;
+
+public:
+    Point start, end;
+    RRTNode* root = NULL;
+    RRTNode* lastNode = NULL;
     int iterations = 0;
+    int goalRadius = 50;
     bool reachedDest = false;
 
     RRT(Point start, Point end, std::vector<Rectangle> obstacles);
