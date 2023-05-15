@@ -22,7 +22,7 @@ The RRT algorithm is performed until a goal has been found. Once found, the RRT*
 ![AnytimeRRT](images/anytime_rrt_demo_v2.gif)
 
 ### Informed RRT*
-The RRT* algorithm is performed until a goal has been found. Once found, the search area is reduced to an ellipse, with foci as the start and goal nodes, and the major and minor axes derived from the minimum and maximum length paths. The process terminates after a set number of iterations or a goal distance threshold has been reached. Informed RRT* is asymptotically optimal, and converges faster than RRT* or Anytime RRT.
+The RRT* algorithm is performed until a goal has been found. Once found, the search area is reduced to an ellipse, with foci as the start and goal nodes, and the major and minor axes derived from the minimum and maximum length paths. The process terminates after a set number of iterations or a goal distance threshold has been reached. Informed RRT* is asymptotically optimal, and converges faster than RRT* and Anytime RRT.
 ![InformedRRT](images/informed_rrt_demo.gif)
 
 ## References
