@@ -20,6 +20,8 @@ public:
     bool reachedDest = false;
 
     RRT(Point start, Point end, std::vector<Rectangle> obstacles);
+    ~RRT();
+    void deleteNodes(RRTNode* node);
     RRTNode* addNode(Point p, sf::RenderWindow& window);
     RRTNode* findClosest(RRTNode* node, Point p);
     void traceBack(RRTNode* node, sf::RenderWindow& window);

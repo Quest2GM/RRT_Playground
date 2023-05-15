@@ -10,6 +10,22 @@ RRT::RRT(Point start, Point end, vector<Rectangle> obstacles)
     root = NULL;
 }
 
+RRT::~RRT()
+{
+    deleteNodes(root);
+    cout << "Destructed RRT Tree!" << endl;
+}
+
+void RRT::deleteNodes(RRTNode* node)
+{
+    for (int i = 0; i < node->children.size(); i++)
+    {
+        deleteNodes(node->children[i]);
+    }
+    delete node;
+}
+
+
 RRTNode* RRT::addNode(Point childPoint, sf::RenderWindow& window)
 {   
     RRTNode* child = new RRTNode(childPoint.x, childPoint.y);
