@@ -10,7 +10,7 @@ $ sudo apt-get install libsfml-dev libeigen3-dev
 
 ## Results
 ### RRT
-At each iteration, a point is sampled within a given search radius, and then is connected to the closest node in the tree. Process terminates when the goal is found. RRTs are probabilistically complete, but not optimal.
+At each iteration, a point is sampled within a given search radius, and then is connected to the closest node in the tree. The process terminates when the goal is found. RRTs are probabilistically complete, but not optimal.
 ![RRT](images/rrt_demo.gif)
 
 ### RRT*
